@@ -6,9 +6,8 @@ import java.util.HashMap;
 
 /**
  * This represents the KV node. It launches.
- * Initializes a KV map. Listens for connections 
- * and adds/subtracts KV pairs. This is going to be simple & dumb by design.
- * 
+ * Initializes a KV map. Listens for connections. 
+ * Each connection kicks off a new thread that handles the HashMap.
  * 
  * @author Michael Basilyan
  *

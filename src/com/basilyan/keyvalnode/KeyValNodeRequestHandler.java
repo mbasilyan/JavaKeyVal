@@ -7,10 +7,10 @@ import java.util.HashMap;
 public class KeyValNodeRequestHandler extends Thread {
 
 
-	 final static String CRLF = "\r\n";
-	 private Socket socket = null;
-	 private HashMap<String, String> hm = null;
-	 
+	final static String CRLF = "\r\n";
+	private Socket socket = null;
+	private HashMap<String, String> hm = null;
+
 	public KeyValNodeRequestHandler(Socket socket, HashMap hm)
 	{
 		super("KeyValNodeRequestHandlerThread_" + socket.getInetAddress().toString());
@@ -18,7 +18,7 @@ public class KeyValNodeRequestHandler extends Thread {
 		this.hm = hm;
 		System.out.println("Connected to: " + socket.getInetAddress() + " on " + socket.getLocalPort());
 	}
-	
+
 	@Override
 	public void run() {
 		/*
@@ -36,29 +36,34 @@ public class KeyValNodeRequestHandler extends Thread {
 				System.out.println("Recieved get command:" + inputLine);
 				String cmd = inputLineSplit[0];
 				if(cmd.toLowerCase().equals("get")) {
-					String key = inputLineSplit[1];
-					String val;
-					if(hm.containsKey(key)) {
-						val = hm.get(key);
-						out.printf("VALUE %s 0 %d\r\n", key, val.length());
-						out.printf("%s\r\n",val);
+					synchronized(hm) { 
+						String key = inputLineSplit[1];
+						String val;
+						if(hm.containsKey(key)) {
+							val = hm.get(key);
+							out.printf("VALUE %s 0 %d\r\n", key, val.length());
+							out.printf("%s\r\n",val);
+						}
+						out.printf("END\r\n");
 					}
-					out.printf("END\r\n");
 				} else if(cmd.toLowerCase().equals("set")) {
-					System.out.println("Recieved set command:" + inputLine);
-					String key = inputLineSplit[1];
-					int length = Integer.parseInt(inputLineSplit[4]);
-					char[] buf = new char[length + 2]; //This is not 100% correct for handling unicode bytes
-					int index = 0;
-					while (index < buf.length) {
-						int len = in.read(buf, index, buf.length - index);
-						if (len == -1)
-							break;
-						index += len;
+					synchronized(hm)
+					{
+						System.out.println("Recieved set command:" + inputLine);
+						String key = inputLineSplit[1];
+						int length = Integer.parseInt(inputLineSplit[4]);
+						char[] buf = new char[length + 2]; //This is not 100% correct for handling unicode bytes
+						int index = 0;
+						while (index < buf.length) {
+							int len = in.read(buf, index, buf.length - index);
+							if (len == -1)
+								break;
+							index += len;
+						}
+						String val = new String(buf, 0, length);
+						hm.put(key, val);
+						out.printf("STORED\r\n");
 					}
-					String val = new String(buf, 0, length);
-					hm.put(key, val);
-					out.printf("STORED\r\n");
 				} else {
 					System.out.println("Unknown cmd: " + cmd);
 					break;

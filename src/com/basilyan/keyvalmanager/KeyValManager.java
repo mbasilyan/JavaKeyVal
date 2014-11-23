@@ -5,7 +5,6 @@ package com.basilyan.keyvalmanager;
  * Reads config file. Initializes machines and abstractions.
  * Needs to be aware of every available machine.
  * 
- * Needs to manage the queue. 
  * @author Michael Basilyan
  *
  */

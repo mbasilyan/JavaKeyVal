@@ -48,7 +48,7 @@ public class KeyValNodeRequestHandler extends Thread {
 					System.out.println("Recieved set command:" + inputLine);
 					String key = inputLineSplit[1];
 					int length = Integer.parseInt(inputLineSplit[4]);
-					char[] buf = new char[length + 2]; //This is not 100% correct for handling unicode bytes, but it's fine here for the benchmark test
+					char[] buf = new char[length + 2]; //This is not 100% correct for handling unicode bytes
 					int index = 0;
 					while (index < buf.length) {
 						int len = in.read(buf, index, buf.length - index);

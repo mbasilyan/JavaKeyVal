@@ -39,7 +39,8 @@ import java.util.Collection;
  */
 
 public class BloomFilter<E> implements Serializable {
-    private BitSet bitset;
+	private static final long serialVersionUID = 6113590305768709416L;
+	private BitSet bitset;
     private int bitSetSize;
     private double bitsPerElement;
     private int expectedNumberOfFilterElements; // expected (maximum) number of elements to be added
@@ -102,6 +103,7 @@ public class BloomFilter<E> implements Serializable {
         this(Math.ceil(-(Math.log(falsePositiveProbability) / Math.log(2))) / Math.log(2), // c = k / ln(2)
              expectedNumberOfElements,
              (int)Math.ceil(-(Math.log(falsePositiveProbability) / Math.log(2)))); // k = ceil(-log_2(false prob.))
+        //System.out.println("Bitset size:" + bitSetSize);
     }
 
     /**

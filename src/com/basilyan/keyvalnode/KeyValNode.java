@@ -7,7 +7,9 @@ import java.util.HashMap;
 /**
  * This represents the KV node. It launches.
  * Initializes a KV map. Listens for connections. 
- * Each connection kicks off a new thread that handles the HashMap.
+ * Each connection kicks off a new thread that handles the gets/sets.
+ * Good reference on server/clients in Java: 
+ * https://docs.oracle.com/javase/tutorial/networking/sockets/clientServer.html
  * 
  * @author Michael Basilyan
  *

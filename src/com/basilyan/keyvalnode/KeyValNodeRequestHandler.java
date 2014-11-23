@@ -2,16 +2,26 @@ package com.basilyan.keyvalnode;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.HashMap;
+import java.util.*;
+
+/**
+ * Implements the protocol and the get/set commands.
+ * @author Michael Basilyan
+ *
+ */
 
 public class KeyValNodeRequestHandler extends Thread {
-
 
 	final static String CRLF = "\r\n";
 	private Socket socket = null;
 	private HashMap<String, String> hm = null;
 
-	public KeyValNodeRequestHandler(Socket socket, HashMap hm)
+	/**
+	 * 
+	 * @param socket - the connection socket
+	 * @param hm - key value map. 
+	 */
+	public KeyValNodeRequestHandler(Socket socket, HashMap<String, String> hm)
 	{
 		super("KeyValNodeRequestHandlerThread_" + socket.getInetAddress().toString());
 		this.socket = socket;

@@ -43,10 +43,10 @@ public class KeyValNodeRequestHandler extends Thread {
 				String inputLine = in.readLine();
 				if(inputLine.equals("")) break;
 				String[] inputLineSplit = inputLine.split(" ");
-				System.out.println("Recieved get command:" + inputLine);
 				String cmd = inputLineSplit[0];
 				if(cmd.toLowerCase().equals("get")) {
 					synchronized(hm) { 
+						System.out.println("Recieved get command:" + inputLine);
 						String key = inputLineSplit[1];
 						String val;
 						if(hm.containsKey(key)) {

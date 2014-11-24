@@ -1,5 +1,6 @@
 package com.basilyan.keyvalmanager;
 import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * Abstracts away the notion of a key-value machine.
@@ -13,9 +14,9 @@ public class KeyValAbstractNode {
 
 	public InetAddress ip;
 	
-	public KeyValAbstractNode(InetAddress ip)
+	public KeyValAbstractNode(String ip) throws UnknownHostException
 	{
-			this.ip = ip;
+			this.ip = InetAddress.getByName(ip);
 	}
 	
 	/**
